@@ -2,8 +2,14 @@ const { Model, DataTypes } = require("sequelize");
 
 class Airport extends Model {
   static associate(models) {
-    Airport.belongsToMany(models.Flight, { through: "DESTINATION_AIRPORT" });
-    Airport.belongsToMany(models.Flight, { through: "ORIGIN_AIRPORT" });
+    Airport.hasMany(models.Flight, {
+      foreignKey: "DESTINATION_AIRPORT",
+      foreignKeyConstraint: true,
+    });
+    Airport.hasMany(models.Flight, {
+      foreignKey: "ORIGIN_AIRPORT",
+      foreignKeyConstraint: true,
+    });
   }
 }
 
@@ -32,11 +38,9 @@ module.exports = (sequelize) => {
       },
       LATITUDE: {
         type: DataTypes.FLOAT,
-        allowNull: false,
       },
       LONGITUDE: {
         type: DataTypes.FLOAT,
-        allowNull: false,
       },
     },
     {

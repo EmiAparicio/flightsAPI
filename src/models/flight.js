@@ -2,22 +2,31 @@ const { Model, DataTypes } = require("sequelize");
 
 class Flight extends Model {
   static associate(models) {
-    Flight.belongsToMany(models.Airport, { through: "DESTINATION_AIRPORT" });
-    Flight.belongsToMany(models.Airport, { through: "ORIGIN_AIRPORT" });
-    Flight.hasOne(models.Airline);
+    Flight.belongsTo(models.Airport, {
+      foreignKey: "DESTINATION_AIRPORT",
+      foreignKeyConstraint: true,
+    });
+    Flight.belongsTo(models.Airport, {
+      foreignKey: "ORIGIN_AIRPORT",
+      foreignKeyConstraint: true,
+    });
+    Flight.belongsTo(models.Airline, {
+      foreignKey: "AIRLINE",
+      foreignKeyConstraint: true,
+    });
   }
 }
 
 module.exports = (sequelize) => {
   Flight.init(
     {
+      ID: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       YEAR: { type: DataTypes.INTEGER },
       MONTH: { type: DataTypes.INTEGER },
       DAY: { type: DataTypes.INTEGER },
       DAY_OF_WEEK: { type: DataTypes.INTEGER },
       FLIGHT_NUMBER: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
       },
       TAIL_NUMBER: {
         type: DataTypes.STRING,
@@ -38,7 +47,7 @@ module.exports = (sequelize) => {
       ARRIVAL_DELAY: { type: DataTypes.INTEGER },
       DIVERTED: { type: DataTypes.INTEGER },
       CANCELLED: { type: DataTypes.INTEGER },
-      CANCELLATION_REASON: { type: DataTypes.INTEGER },
+      CANCELLATION_REASON: { type: DataTypes.STRING },
       AIR_SYSTEM_DELAY: { type: DataTypes.INTEGER },
       SECURITY_DELAY: { type: DataTypes.INTEGER },
       AIRLINE_DELAY: { type: DataTypes.INTEGER },

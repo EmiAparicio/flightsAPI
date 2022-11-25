@@ -2,7 +2,10 @@ const { Model, DataTypes } = require("sequelize");
 
 class Airline extends Model {
   static associate(models) {
-    Airline.belongsTo(models.Flight);
+    Airline.hasMany(models.Flight, {
+      foreignKey: "AIRLINE",
+      foreignKeyConstraint: true,
+    });
   }
 }
 
