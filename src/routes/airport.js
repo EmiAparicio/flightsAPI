@@ -5,6 +5,6 @@ require("dotenv").config();
 const { Airport } = db;
 const airportRoute = Router();
 
-const url = process.env.URL_BACK || "http://localhost:3000";
+const url = process.env.URL_BACK;
 
 module.exports = airportRoute;

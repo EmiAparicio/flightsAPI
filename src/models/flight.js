@@ -22,8 +22,8 @@ module.exports = (sequelize) => {
       TAIL_NUMBER: {
         type: DataTypes.STRING,
       },
-      SCHEDULED_DEPARTURE,
-      DEPARTURE_TIME,
+      SCHEDULED_DEPARTURE: { type: DataTypes.INTEGER },
+      DEPARTURE_TIME: { type: DataTypes.INTEGER },
       DEPARTURE_DELAY: { type: DataTypes.INTEGER },
       TAXI_OUT: { type: DataTypes.INTEGER },
       WHEELS_OFF: { type: DataTypes.INTEGER },
