@@ -41,7 +41,7 @@ airlineRoute.get("/", async (req, res, next) => {
 });
 
 // Create new airline
-// must include "IATA_CODE", "AIRLINE", "CITY", "STATE", "COUNTRY" data in request body
+// must include "IATA_CODE", "AIRLINE" data in request body
 airlineRoute.post("/", async (req, res, next) => {
   try {
     const { IATA_CODE, AIRLINE } = req.body;

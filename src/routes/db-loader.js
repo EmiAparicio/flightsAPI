@@ -18,8 +18,6 @@ require("dotenv").config();
 const { Airline, Airport, Flight } = db;
 const dbLoadRoute = Router();
 
-const url = process.env.URL_BACK;
-
 const fillDB = require("../controllers/fillDB");
 
 dbLoadRoute.get("/", async (req, res, next) => {

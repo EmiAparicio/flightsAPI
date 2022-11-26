@@ -7,7 +7,7 @@ const { Flight } = db;
 const flightRoute = Router();
 
 // GET fetch to /flight to find all flights
-// Add 'key' (YEAR, MONTH, DAY, DAY_OF_WEEK, AIRLINE, FLIGHT_NUMBER, TAIL_NUMBER, ORIGIN_AIRPORT, DESTINATION_AIRPORT, SCHEDULED_DEPARTURE, DEPARTURE_TIME, DEPARTURE_DELAY, TAXI_OUT, WHEELS_OFF, SCHEDULED_TIME, ELAPSED_TIME, AIR_TIME, DISTANCE, WHEELS_ON, TAXI_IN, SCHEDULED_ARRIVAL, ARRIVAL_TIME, ARRIVAL_DELAY, DIVERTED, CANCELLED, CANCELLATION_REASON, AIR_SYSTEM_DELAY, SECURITY_DELAY, AIRLINE_DELAY, LATE_AIRCRAFT_DELAY, WEATHER_DELAY) and 'filter' query strings to get specific flights
+// Add 'key' (ID, YEAR, MONTH, DAY, DAY_OF_WEEK, AIRLINE, FLIGHT_NUMBER, TAIL_NUMBER, ORIGIN_AIRPORT, DESTINATION_AIRPORT, SCHEDULED_DEPARTURE, DEPARTURE_TIME, DEPARTURE_DELAY, TAXI_OUT, WHEELS_OFF, SCHEDULED_TIME, ELAPSED_TIME, AIR_TIME, DISTANCE, WHEELS_ON, TAXI_IN, SCHEDULED_ARRIVAL, ARRIVAL_TIME, ARRIVAL_DELAY, DIVERTED, CANCELLED, CANCELLATION_REASON, AIR_SYSTEM_DELAY, SECURITY_DELAY, AIRLINE_DELAY, LATE_AIRCRAFT_DELAY, WEATHER_DELAY) and 'filter' query strings to get specific flights
 flightRoute.get("/", async (req, res, next) => {
   try {
     const { key, filter } = req.query;
@@ -18,7 +18,6 @@ flightRoute.get("/", async (req, res, next) => {
       const flights = await Flight.findAll();
       return res.status(200).json(flights);
     } else if (
-      key.toUpperCase() === "IATA_CODE" ||
       key.toUpperCase() === "ID" ||
       key.toUpperCase() === "YEAR" ||
       key.toUpperCase() === "MONTH" ||
