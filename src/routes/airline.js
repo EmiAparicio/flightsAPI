@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { sequelize } = require("../db");
 const db = require("../db");
 require("dotenv").config();
 
@@ -7,6 +8,7 @@ const airlineRoute = Router();
 
 // GET fetch to /airline to find all airlines
 // Add 'key' ("IATA_CODE" or "AIRLINE") and 'filter' query strings to get specific airlines
+// Ensure strings for "filter" are encoded
 airlineRoute.get("/", async (req, res, next) => {
   try {
     const { key, filter } = req.query;
@@ -20,9 +22,15 @@ airlineRoute.get("/", async (req, res, next) => {
       key.toUpperCase() === "IATA_CODE" ||
       key.toUpperCase() === "AIRLINE"
     ) {
+      const keyUpperCase = key.toUpperCase();
+      const filterUpperCase = filter.toUpperCase();
       const airlines = await Airline.findAll({
         where: {
-          [key.toUpperCase()]: filter.toUpperCase(),
+          [keyUpperCase]: sequelize.where(
+            sequelize.fn("UPPER", sequelize.col(keyUpperCase)),
+            "LIKE",
+            "%" + filterUpperCase + "%"
+          ),
         },
       });
       return res.status(200).json(airlines);
