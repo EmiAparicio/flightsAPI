@@ -131,20 +131,24 @@ airportRoute.put("/", async (req, res, next) => {
     const newAirport = {};
 
     if (IATA_CODE) {
-      const repeatedAirport = await Airport.findOne({ where: { IATA_CODE } });
+      const repeatedAirport = await Airport.findOne({
+        where: { IATA_CODE: IATA_CODE.toUpperCase() },
+      });
       if (repeatedAirport)
-        return res.status(400).send(`IATA_CODE ${IATA_CODE} already exists`);
-      else newAirport.IATA_CODE = IATA_CODE;
+        return res
+          .status(400)
+          .send(`IATA_CODE ${IATA_CODE.toUpperCase()} already exists`);
+      else newAirport.IATA_CODE = IATA_CODE.toUpperCase();
     }
     if (AIRPORT) newAirport.AIRPORT = AIRPORT;
     if (CITY) newAirport.CITY = CITY;
-    if (STATE) newAirport.STATE = STATE;
-    if (COUNTRY) newAirport.COUNTRY = COUNTRY;
+    if (STATE) newAirport.STATE = STATE.toUpperCase();
+    if (COUNTRY) newAirport.COUNTRY = COUNTRY.toUpperCase();
     if (LATITUDE) newAirport.LATITUDE = LATITUDE;
     if (LONGITUDE) newAirport.LONGITUDE = LONGITUDE;
 
     const airport = await Airport.update(newAirport, {
-      where: { IATA_CODE: curIATA_CODE },
+      where: { IATA_CODE: curIATA_CODE.toUpperCase() },
     });
 
     return res.status(200).json(airport);
